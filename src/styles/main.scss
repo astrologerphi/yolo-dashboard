@@ -1,0 +1,84 @@
+// Global styles for YOLO Dashboard
+@use 'variables' as *;
+
+// Reset & base
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  // CSS custom properties for use in Lit component styles
+  --color-primary: #{$color-primary};
+  --color-primary-dark: #{$color-primary-dark};
+  --color-secondary: #{$color-secondary};
+  --color-accent: #{$color-accent};
+  --color-danger: #{$color-danger};
+  --color-success: #{$color-success};
+
+  --color-bg: #{$color-bg};
+  --color-surface: #{$color-surface};
+  --color-surface-hover: #{$color-surface-hover};
+  --color-border: #{$color-border};
+
+  --color-text: #{$color-text};
+  --color-text-muted: #{$color-text-muted};
+  --color-text-dim: #{$color-text-dim};
+
+  --font-family: #{$font-family};
+  --font-mono: #{$font-mono};
+
+  --radius-sm: #{$radius-sm};
+  --radius-md: #{$radius-md};
+  --radius-lg: #{$radius-lg};
+  --radius-xl: #{$radius-xl};
+
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+  --shadow-glow: #{$shadow-glow};
+
+  --transition-fast: #{$transition-fast};
+  --transition-base: #{$transition-base};
+}
+
+html,
+body {
+  height: 100%;
+  background-color: $color-bg;
+  color: $color-text;
+  font-family: $font-family;
+  font-size: $font-size-base;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Scrollbar styling
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: $color-bg;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-border;
+  border-radius: $radius-sm;
+
+  &:hover {
+    background: $color-text-dim;
+  }
+}
+
+// Focus styles
+:focus-visible {
+  outline: 2px solid $color-primary;
+  outline-offset: 2px;
+  border-radius: $radius-sm;
+}
