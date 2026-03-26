@@ -1,52 +1,71 @@
 # YOLO Dashboard
 
-A modern Node.js web application for monitoring YOLO (You Only Look Once) object detection models in real time.
+A modern local first web app for monitoring stock market.
 
-Built with **TypeScript 6**, **SCSS**, and **Lit** web components, bundled with **Vite**.
+## Data source
+
+- [Financial Modeling Prep](https://site.financialmodelingprep.com/)
 
 ## Features
 
-- 📊 Live metric widgets — FPS, Accuracy, Latency, GPU Usage, and more
-- 🕒 Auto-updating header with live clock and status indicator
-- 🔄 Refresh button with toast notification and randomised metric simulation
-- 📋 Activity log with colour-coded event types (success / warning / danger)
-- 🎨 Dark-themed design using SCSS variables and CSS custom properties
-- ⚡ Fully client-side, zero-dependency runtime (only Lit)
-
 ## Tech stack
 
-| Layer      | Technology         |
-| ---------- | ------------------ |
-| Language   | TypeScript 6       |
-| UI         | Lit 3 (Web Components) |
-| Styles     | SCSS + CSS custom props |
-| Bundler    | Vite 6             |
-| Linting    | ESLint 9 + @typescript-eslint |
+| Layer    | Technology                       |
+| -------- | -------------------------------- |
+| Language | TypeScript 6                     |
+| Libs     | React 19, BaseUI, react-markdown |
+| Styles   | SCSS + CSS custom props          |
+| Bundler  | ESBuild                          |
 
 ## Getting started
 
-```bash
+```
 npm install
-npm run dev      # start development server
 npm run build    # production build → dist/
-npm run preview  # serve production build locally
-npm run lint     # lint TypeScript sources
 ```
 
 ## Project structure
 
-```
-src/
-├── components/
-│   ├── yolo-dashboard.ts   # root dashboard component
-│   ├── yolo-header.ts      # header with clock + refresh
-│   └── yolo-widget.ts      # reusable metric card
-├── styles/
-│   ├── _variables.scss     # SCSS design tokens
-│   └── main.scss           # global reset + CSS custom properties
-└── main.ts                 # entry point
-index.html                  # HTML shell
-vite.config.ts              # Vite configuration
-tsconfig.json               # TypeScript 6 configuration
-eslint.config.js            # ESLint 9 flat config
-```
+- src/
+    - components/
+        - LeftNavigation.tsx
+        - Chart.tsx
+        - StockSummary.tsx
+        - StockItem.tsx
+        - ETFItem.tsx
+        - add more components if needed
+    - styles/
+        - main.scss
+        - add more styles if needed
+    - types/
+        - FinancialDataTypes.ts
+        - add more types if needed
+    - global.d.ts
+    - main.ts
+    - index.html
+- build.js # esbuild script
+- tsconfig.json # TypeScript 6 configuration
+
+## Layout
+
+- a left navigation including a stock list and an etf list
+    - a search bar in the top of the navigation
+    - a tab to switch from stock and etf (may add more item types in future)
+    - each stock item or etf item contains symbol, company name (only for stock), market cap, exchange, and increase/decrease
+- a settings button in bottom right, click to open a modal to set:
+    - FMP API key
+    - OpenRouter API key
+    - OpenRouter model id
+    - prompt for generating company summaries
+- a simple chart to display the prices in the past month
+- a panel to show other data like yahoo finance
+
+## Storage
+
+some of the data are stored in localStorage
+
+- FMP API Key
+- OpenRouter API Key, for generating summaries
+- Prompt for summarizing company info
+- summary for each stock, user can click referesh and save a new summary
+- stock and etf list
