@@ -1,61 +1,85 @@
-// SCSS variables — import with `@use './variables' as *;` in each SCSS file that needs them
+// SCSS variables for YOLO Dashboard — Apple Liquid Glass aesthetic
 
-// Color palette
-$color-primary: #00d4aa;
-$color-primary-dark: #00a884;
-$color-secondary: #7c3aed;
-$color-accent: #f59e0b;
-$color-danger: #ef4444;
-$color-success: #10b981;
+// === COLOR PALETTE ===
+// Dark base
+$color-bg-deep:      #0a0a14;
+$color-bg:           #0e0e1a;
+$color-bg-mid:       #12121f;
 
-// Background & surface
-$color-bg: #0f1117;
-$color-surface: #1a1d27;
-$color-surface-hover: #222636;
-$color-border: #2d3148;
+// Glass surfaces
+$color-glass:        rgba(255, 255, 255, 0.06);
+$color-glass-hover:  rgba(255, 255, 255, 0.10);
+$color-glass-active: rgba(255, 255, 255, 0.14);
+$color-glass-border: rgba(255, 255, 255, 0.12);
+$color-glass-border-bright: rgba(255, 255, 255, 0.22);
+
+// Accent spectrum
+$color-primary:      #3b8cf8;
+$color-primary-glow: rgba(59, 140, 248, 0.4);
+$color-teal:         #2dd4bf;
+$color-teal-glow:    rgba(45, 212, 191, 0.35);
+$color-purple:       #a78bfa;
+$color-pink:         #f472b6;
+$color-accent:       #fbbf24;
+
+// Status
+$color-success:      #34d399;
+$color-success-bg:   rgba(52, 211, 153, 0.12);
+$color-danger:       #f87171;
+$color-danger-bg:    rgba(248, 113, 113, 0.12);
 
 // Text
-$color-text: #e2e8f0;
-$color-text-muted: #94a3b8;
-$color-text-dim: #64748b;
+$color-text:         rgba(255, 255, 255, 0.92);
+$color-text-muted:   rgba(255, 255, 255, 0.55);
+$color-text-dim:     rgba(255, 255, 255, 0.30);
 
-// Spacing scale
-$space-xs: 0.25rem;
-$space-sm: 0.5rem;
-$space-md: 1rem;
-$space-lg: 1.5rem;
-$space-xl: 2rem;
-$space-2xl: 3rem;
+// === TYPOGRAPHY ===
+$font-family: 'Inter', 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+$font-mono:   'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
 
-// Typography
-$font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-$font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-$font-size-xs: 0.75rem;
-$font-size-sm: 0.875rem;
-$font-size-base: 1rem;
-$font-size-lg: 1.125rem;
-$font-size-xl: 1.25rem;
-$font-size-2xl: 1.5rem;
-$font-size-3xl: 2rem;
+$font-size-xs:   0.6875rem;  // 11px
+$font-size-sm:   0.8125rem;  // 13px
+$font-size-base: 0.9375rem;  // 15px
+$font-size-lg:   1.0625rem;  // 17px
+$font-size-xl:   1.25rem;
+$font-size-2xl:  1.5rem;
+$font-size-3xl:  2rem;
 
-// Border radius
-$radius-sm: 0.375rem;
-$radius-md: 0.5rem;
-$radius-lg: 0.75rem;
-$radius-xl: 1rem;
+// === SPACING ===
+$space-xs:  0.25rem;
+$space-sm:  0.5rem;
+$space-md:  0.875rem;
+$space-lg:  1.25rem;
+$space-xl:  1.75rem;
+$space-2xl: 2.5rem;
 
-// Shadows
-$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
-$shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
-$shadow-glow: 0 0 20px rgba(0, 212, 170, 0.15);
+// === SHAPE ===
+$radius-sm: 0.5rem;
+$radius-md: 0.875rem;
+$radius-lg: 1.25rem;
+$radius-xl: 1.75rem;
+$radius-pill: 9999px;
 
-// Transitions
-$transition-fast: 150ms ease;
-$transition-base: 250ms ease;
-$transition-slow: 400ms ease;
+// === GLASS EFFECTS ===
+$blur-sm:  8px;
+$blur-md:  16px;
+$blur-lg:  28px;
+$blur-xl:  48px;
 
-// Breakpoints
+// === SHADOWS ===
+$shadow-sm:    0 1px 3px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.4);
+$shadow-md:    0 4px 16px rgba(0,0,0,0.55), 0 2px 8px rgba(0,0,0,0.4);
+$shadow-lg:    0 10px 40px rgba(0,0,0,0.65), 0 4px 16px rgba(0,0,0,0.5);
+$shadow-glow-blue:   0 0 24px rgba(59, 140, 248, 0.3), 0 0 48px rgba(59, 140, 248, 0.15);
+$shadow-glow-teal:   0 0 24px rgba(45, 212, 191, 0.25), 0 0 48px rgba(45, 212, 191, 0.12);
+
+// === TRANSITIONS ===
+$transition-fast:   120ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-base:   220ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow:   380ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-spring: 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// === BREAKPOINTS ===
 $breakpoint-sm: 640px;
 $breakpoint-md: 768px;
 $breakpoint-lg: 1024px;
