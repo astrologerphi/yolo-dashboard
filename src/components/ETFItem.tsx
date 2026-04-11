@@ -1,4 +1,3 @@
-import React from 'react';
 import type { ETF } from '../types/FinancialDataTypes';
 
 interface Props {
@@ -21,7 +20,7 @@ export function ETFItem({ etf, isActive, onClick }: Props) {
             onClick={onClick}
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => e.key === 'Enter' && onClick()}
+            onKeyDown={e => e.key === 'Enter' && onClick()}
         >
             <span className="etf-item__symbol">{etf.symbol}</span>
             <span className="etf-item__price">${etf.price.toFixed(2)}</span>

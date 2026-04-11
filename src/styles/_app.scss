@@ -1,0 +1,68 @@
+@use 'variables' as *;
+
+.app {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+    background: var(--bg-page);
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bg-page);
+}
+
+.content-area {
+    flex: 1;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: $space-xl;
+    padding: $space-xl;
+    overflow-y: auto;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px $space-2xl;
+    border-bottom: 1px solid var(--border-subtle);
+
+    &__title {
+        font-size: $font-size-body-lg;
+        font-weight: 600;
+        color: var(--text-primary);
+        letter-spacing: -0.2px;
+
+        .symbol {
+            font-family: $font-mono;
+            color: var(--color-brand-deep);
+            margin-right: $space-sm;
+        }
+
+        .name {
+            color: var(--text-tertiary);
+            font-weight: 400;
+            font-size: $font-size-caption;
+        }
+    }
+
+    &__price {
+        font-family: $font-mono;
+        font-size: $font-size-card-title;
+        font-weight: 600;
+        color: var(--text-primary);
+        letter-spacing: -0.2px;
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: $space-sm;
+    }
+}

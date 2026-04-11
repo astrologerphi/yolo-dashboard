@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { Stock, ETF, ListTab } from '../types/FinancialDataTypes';
 import { StockItem } from './StockItem';
 import { ETFItem } from './ETFItem';
@@ -12,26 +12,15 @@ interface Props {
     onSelectSymbol: (symbol: string, type: ListTab) => void;
 }
 
-export function LeftNavigation({
-    stocks,
-    etfs,
-    activeTab,
-    onTabChange,
-    selectedSymbol,
-    onSelectSymbol,
-}: Props) {
+export function LeftNavigation({ stocks, etfs, activeTab, onTabChange, selectedSymbol, onSelectSymbol }: Props) {
     const [query, setQuery] = useState('');
 
     const filteredStocks = stocks.filter(
-        (s) =>
-            s.symbol.toLowerCase().includes(query.toLowerCase()) ||
-            s.name.toLowerCase().includes(query.toLowerCase()),
+        s => s.symbol.toLowerCase().includes(query.toLowerCase()) || s.name.toLowerCase().includes(query.toLowerCase())
     );
 
     const filteredEtfs = etfs.filter(
-        (e) =>
-            e.symbol.toLowerCase().includes(query.toLowerCase()) ||
-            e.name.toLowerCase().includes(query.toLowerCase()),
+        e => e.symbol.toLowerCase().includes(query.toLowerCase()) || e.name.toLowerCase().includes(query.toLowerCase())
     );
 
     return (
@@ -47,7 +36,7 @@ export function LeftNavigation({
                         type="text"
                         placeholder="Search symbols…"
                         value={query}
-                        onChange={(e) => setQuery(e.target.value)}
+                        onChange={e => setQuery(e.target.value)}
                         aria-label="Search stocks and ETFs"
                     />
                 </div>
@@ -70,7 +59,7 @@ export function LeftNavigation({
 
             <div className="left-nav__list">
                 {activeTab === 'stocks' &&
-                    filteredStocks.map((stock) => (
+                    filteredStocks.map(stock => (
                         <StockItem
                             key={stock.symbol}
                             stock={stock}
@@ -79,7 +68,7 @@ export function LeftNavigation({
                         />
                     ))}
                 {activeTab === 'etfs' &&
-                    filteredEtfs.map((etf) => (
+                    filteredEtfs.map(etf => (
                         <ETFItem
                             key={etf.symbol}
                             etf={etf}

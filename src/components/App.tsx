@@ -1,32 +1,81 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { LeftNavigation } from './LeftNavigation';
 import { Chart } from './Chart';
 import { StockSummary } from './StockSummary';
 import { SettingsModal } from './Settings';
 import { SAMPLE_STOCKS, SAMPLE_ETFS, DEFAULT_SUMMARY_PROMPT } from '../data/sampleData';
-import type { Stock, ETF, ListTab, Settings, StockSummaryData } from '../types/FinancialDataTypes';
+import type { Stock, ETF, ListTab, StockSummaryData } from '../types/FinancialDataTypes';
+import type { Settings } from '../types/Settings';
 
-const LS_KEYS = {
-    settings: 'yolo_settings',
-    summaries: 'yolo_summaries',
+const SUMMARIES_KEY = 'yolo_summaries';
+
+// Each Settings field → storage type + key
+const FIELD_STORAGE: Record<keyof Settings, { store: 'local' | 'session'; key: string }> = {
+    fmpApiKey: { store: 'session', key: 'yolo_fmp_api_key' },
+    openRouterApiKey: { store: 'session', key: 'yolo_openrouter_api_key' },
+    openRouterModelId: { store: 'local', key: 'yolo_openrouter_model_id' },
+    summaryPrompt: { store: 'local', key: 'yolo_summary_prompt' },
+    theme: { store: 'local', key: 'yolo_theme' },
+    firebaseConnectionString: { store: 'session', key: 'yolo_firebase_connection_string' },
 };
 
+const SETTINGS_DEFAULTS: Settings = {
+    fmpApiKey: '',
+    openRouterApiKey: '',
+    openRouterModelId: 'openai/gpt-4o-mini',
+    summaryPrompt: DEFAULT_SUMMARY_PROMPT,
+    theme: 'system',
+    firebaseConnectionString: '',
+};
+
+function getStore(kind: 'local' | 'session'): Storage {
+    return kind === 'session' ? sessionStorage : localStorage;
+}
+
+function saveSettings(s: Settings): void {
+    for (const [field, { store, key }] of Object.entries(FIELD_STORAGE) as [
+        keyof Settings,
+        { store: 'local' | 'session'; key: string },
+    ][]) {
+        const val = s[field];
+        if (val) {
+            getStore(store).setItem(key, val);
+        } else {
+            getStore(store).removeItem(key);
+        }
+    }
+}
+
 function loadSettings(): Settings {
+    // Migrate from old single-JSON key
+    const OLD_KEY = 'yolo_settings';
     try {
-        const raw = localStorage.getItem(LS_KEYS.settings);
-        if (raw) return JSON.parse(raw) as Settings;
+        const raw = localStorage.getItem(OLD_KEY);
+        if (raw) {
+            const old = JSON.parse(raw) as Partial<Settings>;
+            const migrated = { ...SETTINGS_DEFAULTS, ...old };
+            saveSettings(migrated);
+            localStorage.removeItem(OLD_KEY);
+            return migrated;
+        }
     } catch {}
-    return {
-        fmpApiKey: '',
-        openRouterApiKey: '',
-        openRouterModelId: 'openai/gpt-4o-mini',
-        summaryPrompt: DEFAULT_SUMMARY_PROMPT,
-    };
+
+    const result = { ...SETTINGS_DEFAULTS };
+    for (const [field, { store, key }] of Object.entries(FIELD_STORAGE) as [
+        keyof Settings,
+        { store: 'local' | 'session'; key: string },
+    ][]) {
+        const val = getStore(store).getItem(key);
+        if (val !== null) {
+            (result as Record<string, string>)[field] = val;
+        }
+    }
+    return result;
 }
 
 function loadSummaries(): Record<string, StockSummaryData> {
     try {
-        const raw = localStorage.getItem(LS_KEYS.summaries);
+        const raw = localStorage.getItem(SUMMARIES_KEY);
         if (raw) return JSON.parse(raw) as Record<string, StockSummaryData>;
     } catch {}
     return {};
@@ -39,6 +88,27 @@ export function App() {
     const [showSettings, setShowSettings] = useState(false);
     const [settings, setSettings] = useState<Settings>(loadSettings);
     const [summaries, setSummaries] = useState<Record<string, StockSummaryData>>(loadSummaries);
+
+    // Apply theme to document root
+    useEffect(() => {
+        function apply(theme: Settings['theme']) {
+            if (theme === 'system') {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', theme);
+            }
+        }
+
+        apply(settings.theme);
+
+        if (settings.theme === 'system') {
+            const mq = window.matchMedia('(prefers-color-scheme: dark)');
+            const handler = () => apply('system');
+            mq.addEventListener('change', handler);
+            return () => mq.removeEventListener('change', handler);
+        }
+    }, [settings.theme]);
 
     const handleSelectSymbol = useCallback((symbol: string, type: ListTab) => {
         setSelectedSymbol(symbol);
@@ -59,23 +129,26 @@ export function App() {
 
     const handleSaveSettings = useCallback((newSettings: Settings) => {
         setSettings(newSettings);
-        localStorage.setItem(LS_KEYS.settings, JSON.stringify(newSettings));
+        saveSettings(newSettings);
     }, []);
 
-    const handleSaveSummary = useCallback((symbol: string, summary: string) => {
-        const updated: Record<string, StockSummaryData> = {
-            ...summaries,
-            [symbol]: { symbol, summary, generatedAt: new Date().toISOString() },
-        };
-        setSummaries(updated);
-        localStorage.setItem(LS_KEYS.summaries, JSON.stringify(updated));
-    }, [summaries]);
+    const handleSaveSummary = useCallback(
+        (symbol: string, summary: string) => {
+            const updated: Record<string, StockSummaryData> = {
+                ...summaries,
+                [symbol]: { symbol, summary, generatedAt: new Date().toISOString() },
+            };
+            setSummaries(updated);
+            localStorage.setItem(SUMMARIES_KEY, JSON.stringify(updated));
+        },
+        [summaries]
+    );
 
     const selectedItem: Stock | ETF | null =
         selectedSymbol && selectedType === 'stocks'
-            ? (SAMPLE_STOCKS.find((s) => s.symbol === selectedSymbol) ?? null)
+            ? (SAMPLE_STOCKS.find(s => s.symbol === selectedSymbol) ?? null)
             : selectedSymbol && selectedType === 'etfs'
-              ? (SAMPLE_ETFS.find((e) => e.symbol === selectedSymbol) ?? null)
+              ? (SAMPLE_ETFS.find(e => e.symbol === selectedSymbol) ?? null)
               : null;
 
     const isUp = selectedItem ? selectedItem.changePercent >= 0 : false;
@@ -106,10 +179,8 @@ export function App() {
                     <div className="top-bar__actions">
                         {selectedItem && (
                             <>
-                        <span className="top-bar__price">${selectedItem.price.toFixed(2)}</span>
-                                <span
-                                    className={`price-badge price-badge--${isUp ? 'up' : 'down'}`}
-                                >
+                                <span className="top-bar__price">${selectedItem.price.toFixed(2)}</span>
+                                <span className={`price-badge price-badge--${isUp ? 'up' : 'down'}`}>
                                     {isUp ? '▲' : '▼'} {Math.abs(selectedItem.changePercent).toFixed(2)}%
                                 </span>
                             </>
@@ -119,10 +190,7 @@ export function App() {
 
                 {/* Main panels */}
                 <div className="content-area">
-                    <Chart
-                        history={selectedItem?.history ?? []}
-                        symbol={selectedSymbol ?? ''}
-                    />
+                    <Chart history={selectedItem?.history ?? []} symbol={selectedSymbol ?? ''} />
                     <StockSummary
                         item={selectedItem}
                         itemType={selectedType}
@@ -145,11 +213,7 @@ export function App() {
 
             {/* Settings modal */}
             {showSettings && (
-                <SettingsModal
-                    settings={settings}
-                    onSave={handleSaveSettings}
-                    onClose={() => setShowSettings(false)}
-                />
+                <SettingsModal settings={settings} onSave={handleSaveSettings} onClose={() => setShowSettings(false)} />
             )}
         </div>
     );

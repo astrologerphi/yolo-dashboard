@@ -1,0 +1,124 @@
+@use 'variables' as *;
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-xs;
+    border: none;
+    border-radius: $radius-pill;
+    cursor: pointer;
+    font-family: $font-family;
+    font-weight: 500;
+    transition: all $transition-fast;
+    white-space: nowrap;
+
+    &--sm {
+        font-size: $font-size-label;
+        padding: 5px 12px;
+    }
+
+    &--md {
+        font-size: $font-size-button;
+        padding: 8px 24px;
+    }
+
+    &--glass {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-medium);
+        color: var(--text-secondary);
+        box-shadow: var(--shadow-button);
+
+        &:hover {
+            background: var(--bg-surface-raised);
+            color: var(--text-primary);
+        }
+    }
+
+    &--primary {
+        background: var(--bg-btn-primary);
+        color: var(--text-btn-primary);
+        box-shadow: var(--shadow-button);
+
+        &:hover {
+            opacity: 0.9;
+        }
+    }
+
+    &--active {
+        background: var(--color-brand-light);
+        border: 1px solid var(--border-brand-muted);
+        color: var(--color-brand-deep);
+    }
+
+    &--icon {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        border-radius: $radius-sm;
+        font-size: 16px;
+    }
+}
+
+.price-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: $font-mono;
+    font-size: $font-size-label;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: $radius-pill;
+
+    &--up {
+        color: var(--color-success-text);
+        background: var(--color-success-bg);
+    }
+
+    &--down {
+        color: var(--color-danger);
+        background: var(--color-danger-bg);
+    }
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: $font-size-label;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: $radius-pill;
+    background: var(--bg-tag);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-tertiary);
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 200px;
+    color: var(--text-muted);
+    gap: $space-sm;
+    text-align: center;
+
+    &__icon {
+        font-size: 2.5rem;
+        opacity: 0.4;
+    }
+
+    &__text {
+        font-size: $font-size-caption;
+    }
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-medium);
+    border-top-color: var(--color-brand);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}

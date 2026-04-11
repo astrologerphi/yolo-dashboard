@@ -1,83 +1,88 @@
-// SCSS variables for YOLO Dashboard — Apple Liquid Glass aesthetic
+// SCSS variables for YOLO Dashboard — Mintlify-inspired design system
 
 // === COLOR PALETTE ===
-// Dark base
-$color-bg-deep:      #0a0a14;
-$color-bg:           #0e0e1a;
-$color-bg-mid:       #12121f;
+// Primary
+$color-near-black: #0d0d0d;
+$color-white: #ffffff;
+$color-brand: #18e299;
 
-// Glass surfaces
-$color-glass:        rgba(255, 255, 255, 0.06);
-$color-glass-hover:  rgba(255, 255, 255, 0.10);
-$color-glass-active: rgba(255, 255, 255, 0.14);
-$color-glass-border: rgba(255, 255, 255, 0.12);
-$color-glass-border-bright: rgba(255, 255, 255, 0.22);
+// Brand variations
+$color-brand-light: #d4fae8;
+$color-brand-deep: #0fa76e;
 
-// Accent spectrum
-$color-primary:      #3b8cf8;
-$color-primary-glow: rgba(59, 140, 248, 0.4);
-$color-teal:         #2dd4bf;
-$color-teal-glow:    rgba(45, 212, 191, 0.35);
-$color-purple:       #a78bfa;
-$color-pink:         #f472b6;
-$color-accent:       #fbbf24;
+// Neutral scale
+$color-gray-900: #0d0d0d;
+$color-gray-700: #333333;
+$color-gray-500: #666666;
+$color-gray-400: #888888;
+$color-gray-200: #e5e5e5;
+$color-gray-100: #f5f5f5;
+$color-gray-50: #fafafa;
+
+// Semantic text
+$color-text: #0d0d0d;
+$color-text-secondary: #333333;
+$color-text-tertiary: #666666;
+$color-text-muted: #888888;
+
+// Borders & surfaces
+$color-border-subtle: rgba(0, 0, 0, 0.05);
+$color-border-medium: rgba(0, 0, 0, 0.08);
 
 // Status
-$color-success:      #34d399;
-$color-success-bg:   rgba(52, 211, 153, 0.12);
-$color-danger:       #f87171;
-$color-danger-bg:    rgba(248, 113, 113, 0.12);
-
-// Text
-$color-text:         rgba(255, 255, 255, 0.92);
-$color-text-muted:   rgba(255, 255, 255, 0.55);
-$color-text-dim:     rgba(255, 255, 255, 0.30);
+$color-success: #18e299;
+$color-success-bg: #d4fae8;
+$color-success-text: #0fa76e;
+$color-danger: #d45656;
+$color-danger-bg: rgba(212, 86, 86, 0.1);
+$color-warn: #c37d0d;
+$color-info: #3772cf;
 
 // === TYPOGRAPHY ===
-$font-family: 'Inter', 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
-$font-mono:   'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+$font-family: 'Inter', 'Inter Fallback', system-ui, -apple-system, sans-serif;
+$font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 
-$font-size-xs:   0.6875rem;  // 11px
-$font-size-sm:   0.8125rem;  // 13px
-$font-size-base: 0.9375rem;  // 15px
-$font-size-lg:   1.0625rem;  // 17px
-$font-size-xl:   1.25rem;
-$font-size-2xl:  1.5rem;
-$font-size-3xl:  2rem;
+// Mintlify type scale
+$font-size-display: 4rem; // 64px
+$font-size-section: 2.5rem; // 40px
+$font-size-subheading: 1.5rem; // 24px
+$font-size-card-title: 1.25rem; // 20px
+$font-size-body-lg: 1.125rem; // 18px
+$font-size-body: 1rem; // 16px
+$font-size-button: 0.9375rem; // 15px
+$font-size-caption: 0.875rem; // 14px
+$font-size-label: 0.8125rem; // 13px
+$font-size-mono: 0.75rem; // 12px
+$font-size-micro: 0.625rem; // 10px
 
-// === SPACING ===
-$space-xs:  0.25rem;
-$space-sm:  0.5rem;
-$space-md:  0.875rem;
-$space-lg:  1.25rem;
-$space-xl:  1.75rem;
-$space-2xl: 2.5rem;
+// === SPACING (8px base) ===
+$space-2xs: 2px;
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 12px;
+$space-lg: 16px;
+$space-xl: 24px;
+$space-2xl: 32px;
+$space-3xl: 48px;
+$space-4xl: 64px;
+$space-5xl: 96px;
 
 // === SHAPE ===
-$radius-sm: 0.5rem;
-$radius-md: 0.875rem;
-$radius-lg: 1.25rem;
-$radius-xl: 1.75rem;
+$radius-xs: 4px;
+$radius-sm: 8px;
+$radius-md: 16px;
+$radius-lg: 24px;
 $radius-pill: 9999px;
 
-// === GLASS EFFECTS ===
-$blur-sm:  8px;
-$blur-md:  16px;
-$blur-lg:  28px;
-$blur-xl:  48px;
-
 // === SHADOWS ===
-$shadow-sm:    0 1px 3px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.4);
-$shadow-md:    0 4px 16px rgba(0,0,0,0.55), 0 2px 8px rgba(0,0,0,0.4);
-$shadow-lg:    0 10px 40px rgba(0,0,0,0.65), 0 4px 16px rgba(0,0,0,0.5);
-$shadow-glow-blue:   0 0 24px rgba(59, 140, 248, 0.3), 0 0 48px rgba(59, 140, 248, 0.15);
-$shadow-glow-teal:   0 0 24px rgba(45, 212, 191, 0.25), 0 0 48px rgba(45, 212, 191, 0.12);
+$shadow-card: 0px 2px 4px rgba(0, 0, 0, 0.03);
+$shadow-button: 0px 1px 2px rgba(0, 0, 0, 0.06);
+$shadow-elevated: 0 10px 40px rgba(0, 0, 0, 0.12);
 
 // === TRANSITIONS ===
-$transition-fast:   120ms cubic-bezier(0.4, 0, 0.2, 1);
-$transition-base:   220ms cubic-bezier(0.4, 0, 0.2, 1);
-$transition-slow:   380ms cubic-bezier(0.4, 0, 0.2, 1);
-$transition-spring: 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+$transition-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-base: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow: 380ms cubic-bezier(0.4, 0, 0.2, 1);
 
 // === BREAKPOINTS ===
 $breakpoint-sm: 640px;

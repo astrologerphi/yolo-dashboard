@@ -13,9 +13,9 @@ export interface Stock {
     symbol: string;
     name: string;
     price: number;
-    change: number;       // absolute change
+    change: number; // absolute change
     changePercent: number; // percentage change
-    marketCap: number;    // in billions USD
+    marketCap: number; // in billions USD
     exchange: string;
     sector: string;
     history: PricePoint[];
@@ -43,13 +43,6 @@ export interface StockDetails {
     avgVolume: number;
     beta: number;
     website: string;
-}
-
-export interface Settings {
-    fmpApiKey: string;
-    openRouterApiKey: string;
-    openRouterModelId: string;
-    summaryPrompt: string;
 }
 
 export interface StockSummaryData {

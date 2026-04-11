@@ -1,0 +1,189 @@
+@use 'variables' as *;
+
+// === RESET ===
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+// === THEME TOKENS (light = default) ===
+:root {
+    // Surfaces
+    --bg-page: #{$color-white};
+    --bg-surface: #{$color-white};
+    --bg-surface-raised: #{$color-gray-50};
+    --bg-surface-hover: #{$color-gray-100};
+
+    // Text
+    --text-primary: #{$color-text};
+    --text-secondary: #{$color-text-secondary};
+    --text-tertiary: #{$color-text-tertiary};
+    --text-muted: #{$color-text-muted};
+    --text-inverse: #{$color-white};
+
+    // Brand
+    --color-brand: #{$color-brand};
+    --color-brand-light: #{$color-brand-light};
+    --color-brand-deep: #{$color-brand-deep};
+
+    // Borders
+    --border-subtle: #{$color-border-subtle};
+    --border-medium: #{$color-border-medium};
+    --border-brand-muted: rgba(24, 226, 153, 0.3);
+
+    // Status
+    --color-success-text: #{$color-success-text};
+    --color-success-bg: #{$color-success-bg};
+    --color-danger: #{$color-danger};
+    --color-danger-bg: #{$color-danger-bg};
+
+    // Buttons
+    --bg-btn-primary: #{$color-near-black};
+    --text-btn-primary: #{$color-white};
+
+    // Tags
+    --bg-tag: #{$color-gray-100};
+
+    // Shadows
+    --shadow-card: #{$shadow-card};
+    --shadow-button: #{$shadow-button};
+    --shadow-elevated: #{$shadow-elevated};
+
+    // Scrollbar
+    --scrollbar-thumb: rgba(0, 0, 0, 0.12);
+    --scrollbar-thumb-hover: rgba(0, 0, 0, 0.22);
+
+    // Chart
+    --chart-grid: rgba(0, 0, 0, 0.06);
+    --chart-axis-text: #888888;
+    --chart-positive: #0fa76e;
+    --chart-negative: #d45656;
+
+    // Overlay
+    --overlay-bg: rgba(0, 0, 0, 0.4);
+
+    // Fonts
+    --font-family: #{$font-family};
+    --font-mono: #{$font-mono};
+
+    // Backward compat for inline styles
+    --color-primary: var(--color-brand);
+    --color-teal: var(--color-brand-deep);
+}
+
+// === DARK THEME ===
+[data-theme='dark'] {
+    --bg-page: #0d0d0d;
+    --bg-surface: #141414;
+    --bg-surface-raised: #1a1a1a;
+    --bg-surface-hover: #222222;
+
+    --text-primary: #ededed;
+    --text-secondary: #a0a0a0;
+    --text-tertiary: #808080;
+    --text-muted: #666666;
+    --text-inverse: #0d0d0d;
+
+    --color-brand: #18e299;
+    --color-brand-light: rgba(24, 226, 153, 0.15);
+    --color-brand-deep: #34eaaa;
+
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-medium: rgba(255, 255, 255, 0.12);
+    --border-brand-muted: rgba(24, 226, 153, 0.3);
+
+    --color-success-text: #34eaaa;
+    --color-success-bg: rgba(24, 226, 153, 0.15);
+    --color-danger: #f87171;
+    --color-danger-bg: rgba(248, 113, 113, 0.15);
+
+    --bg-btn-primary: #ededed;
+    --text-btn-primary: #0d0d0d;
+    --bg-tag: #1a1a1a;
+
+    --shadow-card: 0px 2px 4px rgba(0, 0, 0, 0.4);
+    --shadow-button: 0px 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-elevated: 0 10px 40px rgba(0, 0, 0, 0.5);
+
+    --scrollbar-thumb: rgba(255, 255, 255, 0.12);
+    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.22);
+
+    --chart-grid: rgba(255, 255, 255, 0.08);
+    --chart-axis-text: #666666;
+    --chart-positive: #34eaaa;
+    --chart-negative: #f87171;
+
+    --overlay-bg: rgba(0, 0, 0, 0.6);
+}
+
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: $font-family;
+    font-size: $font-size-body;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+// === SCROLLBAR ===
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: $radius-pill;
+    &:hover {
+        background: var(--scrollbar-thumb-hover);
+    }
+}
+
+// === FOCUS ===
+:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+    border-radius: $radius-xs;
+}
+
+// === ANIMATIONS ===
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

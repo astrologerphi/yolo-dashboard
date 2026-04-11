@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import type { Stock, ETF, StockDetails, StockSummaryData, Settings } from '../types/FinancialDataTypes';
+import type { Stock, ETF, StockDetails, StockSummaryData } from '../types/FinancialDataTypes';
+import type { Settings } from '../types/Settings';
 import { SAMPLE_DETAILS } from '../data/sampleData';
 
 interface Props {
@@ -78,7 +79,7 @@ export function StockSummary({ item, itemType, settings, summaries, onSaveSummar
             });
 
             if (!res.ok) throw new Error(`API error: ${res.status}`);
-            const json = await res.json() as { choices: Array<{ message: { content: string } }> };
+            const json = (await res.json()) as { choices: Array<{ message: { content: string } }> };
             const text = json.choices[0]?.message?.content ?? '';
             onSaveSummary(item!.symbol, text);
         } catch (err) {
@@ -157,9 +158,7 @@ export function StockSummary({ item, itemType, settings, summaries, onSaveSummar
                     )}
                 </div>
 
-                {details?.description && (
-                    <p className="summary-panel__description">{details.description}</p>
-                )}
+                {details?.description && <p className="summary-panel__description">{details.description}</p>}
 
                 {/* AI Summary */}
                 {itemType === 'stocks' && (
@@ -185,10 +184,14 @@ export function StockSummary({ item, itemType, settings, summaries, onSaveSummar
                         </div>
 
                         {error && (
-                            <p style={{ fontSize: '0.8125rem', color: '#f87171', marginBottom: '8px' }}>{error}</p>
+                            <p style={{ fontSize: '0.8125rem', color: 'var(--color-danger)', marginBottom: '8px' }}>
+                                {error}
+                            </p>
                         )}
 
-                        <div className={`summary-panel__ai-content${savedSummary ? '' : ' summary-panel__ai-content--placeholder'}`}>
+                        <div
+                            className={`summary-panel__ai-content${savedSummary ? '' : ' summary-panel__ai-content--placeholder'}`}
+                        >
                             {savedSummary ? (
                                 <ReactMarkdown>{savedSummary.summary}</ReactMarkdown>
                             ) : (

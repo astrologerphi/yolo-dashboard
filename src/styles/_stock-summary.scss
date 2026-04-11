@@ -1,0 +1,122 @@
+@use 'variables' as *;
+
+.summary-panel {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: $radius-md;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: $space-lg $space-xl;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    &__title {
+        font-size: $font-size-label;
+        font-weight: 500;
+        color: var(--text-tertiary);
+        text-transform: uppercase;
+        letter-spacing: 0.65px;
+    }
+
+    &__body {
+        padding: $space-xl;
+    }
+
+    &__stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: $space-lg;
+        margin-bottom: $space-xl;
+
+        @media (max-width: $breakpoint-md) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    &__description {
+        font-size: $font-size-caption;
+        color: var(--text-secondary);
+        line-height: 1.7;
+    }
+
+    &__ai-section {
+        border-top: 1px solid var(--border-subtle);
+        padding-top: $space-xl;
+        margin-top: $space-lg;
+    }
+
+    &__ai-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: $space-lg;
+
+        h4 {
+            font-size: $font-size-caption;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            letter-spacing: 0.04em;
+        }
+    }
+
+    &__ai-content {
+        font-size: $font-size-caption;
+        line-height: 1.7;
+        color: var(--text-secondary);
+
+        p {
+            margin-bottom: $space-sm;
+        }
+        strong {
+            color: var(--text-primary);
+        }
+
+        &--placeholder {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+    }
+}
+
+.stat-card {
+    background: var(--bg-surface-raised);
+    border: 1px solid var(--border-subtle);
+    border-radius: $radius-sm;
+    padding: $space-lg;
+    transition: background $transition-fast;
+
+    &:hover {
+        background: var(--bg-surface-hover);
+    }
+
+    &__label {
+        font-family: $font-mono;
+        font-size: $font-size-mono;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        margin-bottom: 4px;
+    }
+
+    &__value {
+        font-size: $font-size-body-lg;
+        font-weight: 600;
+        font-family: $font-mono;
+        color: var(--text-primary);
+
+        &--sm {
+            font-size: $font-size-label;
+        }
+        &--up {
+            color: var(--color-success-text);
+        }
+        &--down {
+            color: var(--color-danger);
+        }
+    }
+}

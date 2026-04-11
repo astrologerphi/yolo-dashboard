@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { PricePoint } from '../types/FinancialDataTypes';
 
 interface Props {
@@ -16,7 +16,7 @@ function filterByRange(history: PricePoint[], range: Range): PricePoint[] {
     return sorted;
 }
 
-export function Chart({ history, symbol, color = '#3b8cf8' }: Props) {
+export function Chart({ history, symbol }: Props) {
     const [range, setRange] = useState<Range>('1M');
     const data = useMemo(() => filterByRange(history, range), [history, range]);
 
@@ -37,7 +37,7 @@ export function Chart({ history, symbol, color = '#3b8cf8' }: Props) {
     const chartW = W - PAD.left - PAD.right;
     const chartH = H - PAD.top - PAD.bottom;
 
-    const prices = data.map((d) => d.close);
+    const prices = data.map(d => d.close);
     const minP = Math.min(...prices);
     const maxP = Math.max(...prices);
     const priceRange = maxP - minP || 1;
@@ -63,7 +63,7 @@ export function Chart({ history, symbol, color = '#3b8cf8' }: Props) {
     const xLabels = [0, Math.floor((data.length - 1) / 2), data.length - 1];
 
     const isPositive = data[data.length - 1].close >= data[0].close;
-    const lineColor = isPositive ? '#34d399' : '#f87171';
+    const lineColor = isPositive ? 'var(--chart-positive)' : 'var(--chart-negative)';
     const gradId = `grad-${symbol}`;
 
     return (
@@ -71,7 +71,7 @@ export function Chart({ history, symbol, color = '#3b8cf8' }: Props) {
             <div className="chart-panel__header">
                 <span className="chart-panel__title">Price History</span>
                 <div className="chart-panel__range-btns">
-                    {RANGES.map((r) => (
+                    {RANGES.map(r => (
                         <button
                             key={r}
                             className={`btn btn--sm btn--glass${range === r ? ' btn--active' : ''}`}
@@ -91,8 +91,8 @@ export function Chart({ history, symbol, color = '#3b8cf8' }: Props) {
             >
                 <defs>
                     <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor={lineColor} stopOpacity="0.25" />
-                        <stop offset="100%" stopColor={lineColor} stopOpacity="0.01" />
+                        <stop offset="0%" style={{ stopColor: lineColor, stopOpacity: 0.25 }} />
+                        <stop offset="100%" style={{ stopColor: lineColor, stopOpacity: 0.01 }} />
                     </linearGradient>
                 </defs>
 
@@ -106,16 +106,16 @@ export function Chart({ history, symbol, color = '#3b8cf8' }: Props) {
                                 y1={y}
                                 x2={W - PAD.right}
                                 y2={y}
-                                stroke="rgba(255,255,255,0.06)"
+                                style={{ stroke: 'var(--chart-grid)' }}
                                 strokeWidth="1"
                             />
                             <text
                                 x={PAD.left - 6}
                                 y={parseFloat(y) + 4}
                                 textAnchor="end"
-                                fill="rgba(255,255,255,0.35)"
+                                style={{ fill: 'var(--chart-axis-text)' }}
                                 fontSize="9"
-                                fontFamily="JetBrains Mono, monospace"
+                                fontFamily="JetBrains Mono, ui-monospace, monospace"
                             >
                                 {v >= 1000 ? `${(v / 1000).toFixed(1)}k` : v.toFixed(0)}
                             </text>
@@ -130,7 +130,7 @@ export function Chart({ history, symbol, color = '#3b8cf8' }: Props) {
                 <path
                     d={linePath}
                     fill="none"
-                    stroke={lineColor}
+                    style={{ stroke: lineColor }}
                     strokeWidth="2"
                     strokeLinejoin="round"
                     strokeLinecap="round"
@@ -141,18 +141,18 @@ export function Chart({ history, symbol, color = '#3b8cf8' }: Props) {
                     cx={scaleX(data.length - 1)}
                     cy={scaleY(data[data.length - 1].close)}
                     r="3.5"
-                    fill={lineColor}
+                    style={{ fill: lineColor, color: lineColor }}
                     filter="drop-shadow(0 0 4px currentColor)"
                 />
 
                 {/* X labels */}
-                {xLabels.map((idx) => (
+                {xLabels.map(idx => (
                     <text
                         key={idx}
                         x={scaleX(idx).toFixed(1)}
                         y={H - 6}
                         textAnchor="middle"
-                        fill="rgba(255,255,255,0.35)"
+                        style={{ fill: 'var(--chart-axis-text)' }}
                         fontSize="9"
                         fontFamily="Inter, sans-serif"
                     >
